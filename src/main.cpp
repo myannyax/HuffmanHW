@@ -5,7 +5,8 @@
 
 int main(int argc, char *argv[]) {
     if (argc < 1) {
-        return 1;
+        std::cerr << "Wrong arguments\n";
+        return 0;
     }
     std::string source;
     std::string destination;
@@ -70,6 +71,6 @@ int main(int argc, char *argv[]) {
         }
     } else {
         std::cerr << "Wrong arguments\n";
-        return 1;
+        return 0;
     }
 }
