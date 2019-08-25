@@ -16,7 +16,7 @@ void get_bytes_from_vector(size_t n, const std::vector<bool> &v, T &to, size_t &
     t_pos += n * 8;
 }
 
-void HuffmanArchiver::_calculate_codes(const TreeNode *node, std::vector<bool> code) {
+void HuffmanArchiver::_calculate_codes(const std::shared_ptr<TreeNode>& node, std::vector<bool> code) {
     if (node == nullptr) return;
 
     if (!node->is_internal_node) {
@@ -25,10 +25,10 @@ void HuffmanArchiver::_calculate_codes(const TreeNode *node, std::vector<bool> c
         return;
     }
     code.push_back(false);
-    _calculate_codes(node->left.get(), code);
+    _calculate_codes(node->left, code);
     code.pop_back();
     code.push_back(true);
-    _calculate_codes(node->right.get(), code);
+    _calculate_codes(node->right, code);
     code.pop_back();
 }
 
@@ -42,7 +42,7 @@ void HuffmanArchiver::calculate_codes(const std::string &in_n) {
         source_size++;
     }
     for (const auto& elem: w) {
-        tree.add(new TreeNode(elem.second, elem.first));
+        tree.add(std::make_shared<TreeNode>(elem.second, elem.first));
     }
     w.clear();
     if(!tree.q_size()) throw HuffmanArchiver::huff_exception();
